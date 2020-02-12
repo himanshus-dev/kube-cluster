@@ -1,5 +1,5 @@
 ##################################################
-# This scripts sets the machine as a master node #
+# This scripts sets the machine as a kube node   #
 # by installing all related software and setting #
 # related settings on the host.                  #
 ##################################################
@@ -38,5 +38,7 @@ apt-get update
 sudo apt-get install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
 
+# ----- Added -----
 # According to kubernetes official site - it should detect the cgroups-driver
 # automatically. If it doesn't go that way. I have to add a way to set it.
+sed -i '/\[Service\]/a Environment="cgroup-driver=systemd/cgroup-driver=cgroupfs"' /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
